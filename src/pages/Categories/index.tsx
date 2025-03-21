@@ -1,104 +1,54 @@
 import ProductsList from '../../components/ProductsList'
-import Game from '../../models/Game'
 
 import resident from '../../assets/images/resident.png'
 import diablo from '../../assets/images/diablo.png'
 import starWars from '../../assets/images/star_wars.png'
 import zelda from '../../assets/images/zelda.png'
+import { Game } from '../Home'
+import { useEffect, useState } from 'react'
 
-const promocoes: Game[] = [
-  {
-    id: 1,
-    category: 'Ação',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia facilis sed delectus dolorum excepturi! Consectetur repellat unde quasi eaque velit laboriosam nemo debitis impedit officia beatae perferendis, ipsa magni neque.',
-    title: 'Resident Evil 4',
-    system: 'Windows',
-    infos: ['10%', 'R$ 250,00'],
-    image: resident
-  },
-  {
-    id: 2,
-    category: 'Ação',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia facilis sed delectus dolorum excepturi! Consectetur repellat unde quasi eaque velit laboriosam nemo debitis impedit officia beatae perferendis, ipsa magni neque.',
-    title: 'Resident Evil 4',
-    system: 'PS5',
-    infos: ['5%', 'R$ 290,00'],
-    image: resident
-  },
-  {
-    id: 3,
-    category: 'Ação',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia facilis sed delectus dolorum excepturi! Consectetur repellat unde quasi eaque velit laboriosam nemo debitis impedit officia beatae perferendis, ipsa magni neque.',
-    title: 'Resident Evil 4',
-    system: 'Windows',
-    infos: ['10%', 'R$ 250,00'],
-    image: resident
-  },
-  {
-    id: 4,
-    category: 'Ação',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia facilis sed delectus dolorum excepturi! Consectetur repellat unde quasi eaque velit laboriosam nemo debitis impedit officia beatae perferendis, ipsa magni neque.',
-    title: 'Resident Evil 4',
-    system: 'Windows',
-    infos: ['10%', 'R$ 250,00'],
-    image: resident
-  }
-]
+const Categories = () => {
+  const [gamesAcao, setGameAcao] = useState<Game[]>([])
+  const [gamesEsportes, setGameEsportes] = useState<Game[]>([])
+  const [gamesSimulacao, setGameSimulacao] = useState<Game[]>([])
+  const [gamesLuta, setGameLuta] = useState<Game[]>([])
+  const [gamesRpg, setGameRpg] = useState<Game[]>([])
 
-const emBreve: Game[] = [
-  {
-    id: 5,
-    category: 'RPG',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia facilis sed delectus dolorum excepturi! Consectetur repellat unde quasi eaque velit laboriosam nemo debitis impedit officia beatae perferendis, ipsa magni neque.',
-    title: 'Diablo 4',
-    system: 'Windows',
-    infos: ['17/05'],
-    image: diablo
-  },
-  {
-    id: 6,
-    category: 'RPG',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia facilis sed delectus dolorum excepturi! Consectetur repellat unde quasi eaque velit laboriosam nemo debitis impedit officia beatae perferendis, ipsa magni neque.',
-    title: 'Diablo 4',
-    system: 'Windows',
-    infos: ['17/05'],
-    image: diablo
-  },
-  {
-    id: 7,
-    category: 'RPG',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia facilis sed delectus dolorum excepturi! Consectetur repellat unde quasi eaque velit laboriosam nemo debitis impedit officia beatae perferendis, ipsa magni neque.',
-    title: 'Zelda',
-    system: 'Nintendo',
-    infos: ['17/05'],
-    image: zelda
-  },
-  {
-    id: 8,
-    category: 'RPG',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia facilis sed delectus dolorum excepturi! Consectetur repellat unde quasi eaque velit laboriosam nemo debitis impedit officia beatae perferendis, ipsa magni neque.',
-    title: 'Star Wars',
-    system: 'Windows',
-    infos: ['17/05'],
-    image: starWars
-  }
-]
+  useEffect(() => {
+    fetch('https://fake-api-tau.vercel.app/api/eplay/acao')
+      .then((res) => res.json())
+      .then((res) => setGameAcao(res))
 
-const Categories = () => (
-  <>
-    <ProductsList games={promocoes} title="RPG" background="gray" />
-    <ProductsList games={emBreve} title="Ação" background="black" />
-    <ProductsList games={promocoes} title="Aventura" background="gray" />
-    <ProductsList games={emBreve} title="FPS" background="black" />
-  </>
-)
+    fetch('https://fake-api-tau.vercel.app/api/eplay/esportes')
+      .then((res) => res.json())
+      .then((res) => setGameEsportes(res))
+
+    fetch('https://fake-api-tau.vercel.app/api/eplay/simulacao')
+      .then((res) => res.json())
+      .then((res) => setGameSimulacao(res))
+
+    fetch('https://fake-api-tau.vercel.app/api/eplay/luta')
+      .then((res) => res.json())
+      .then((res) => setGameLuta(res))
+
+    fetch('https://fake-api-tau.vercel.app/api/eplay/rpg')
+      .then((res) => res.json())
+      .then((res) => setGameRpg(res))
+  }, [])
+
+  return (
+    <>
+      <ProductsList games={gamesAcao} title="Ação" background="black" />
+      <ProductsList games={gamesEsportes} title="Esportes" background="gray" />
+      <ProductsList
+        games={gamesSimulacao}
+        title="Simulação"
+        background="black"
+      />
+      <ProductsList games={gamesLuta} title="Luta" background="gray" />
+      <ProductsList games={gamesRpg} title="RPG" background="black" />
+    </>
+  )
+}
 
 export default Categories
