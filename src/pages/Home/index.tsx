@@ -1,6 +1,5 @@
 import Banner from '../../components/banner'
 import ProductsList from '../../components/ProductsList'
-import { useEffect, useState } from 'react'
 
 import { useGetOnSaleQuery, useGetSoonQuery } from '../../services/api'
 
